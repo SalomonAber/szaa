@@ -47,10 +47,6 @@ body {
   color: var(--foreground-color);
 }
 
-.links__container {
-  display: contents;
-}
-
 .links {
   flex-grow: 1;
   width: 100%;
@@ -148,11 +144,6 @@ body {
 @media (max-width: 550px) {
   .title {
     margin: 20px;
-  }
-
-  .links__container {
-    display: block;
-    padding: 20px 0;
   }
 
   .links {
