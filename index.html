@@ -8,8 +8,8 @@
     <meta name="description" content="Personal website of Salomon Aengenheyster-Aber" />
     <meta name="author" content="Salomon Aengenheyster-Aber" />
     <meta name="keywords" content="szaa, Salomon, Aengenheyster, Aber, Aengenheyster-Aber" />
-    <link rel="stylesheet" href="./stylesheet.css" type="text/css" />
     <link rel="stylesheet" href="./reset.css" type="text/css" />
+    <link rel="stylesheet" href="./stylesheet.css" type="text/css" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta property="og:title" content="Salomon Aengenheyster-Aber" />
     <meta property="og:description"
@@ -21,18 +21,18 @@
 </head>
 
 <body>
-    <header class="title">
-        <h1 class="title__title">Salomon Z. Aengenheyster-Aber</h1>
-        <p class="title__description">
+    <header class="title" aria-label="heading">
+        <h1 class="title__title" aria-label="name">Salomon Z. Aengenheyster-Aber</h1>
+        <p class="title__description" aria-label="salutation">
             Hi! Welcome to my personal website. Feel free
             to browse around.
         </p>
-        <p class="title__date"><time datetime="2022-05-01">May 1st, 2022</time></p>
+        <p class="title__date" aria-label="date"><time datetime="2022-05-01" aria-label="date">May 1st, 2022</time></p>
     </header>
 
-    <main class="links__container">
+    <main class="links__container" aria-label="navigation">
         <ul class="links">
-            <li class="link">
+            <li class="link" aria-label="music">
                 <a href="music" class="link">
                     <img class="link__image"
                         srcset="images/piano-200w.webp, images/piano-300w.webp 1.5x, images/piano-400w.webp 2x"
@@ -40,7 +40,7 @@
                     <p class="link__text">music</p>
                 </a>
             </li>
-            <li class="link">
+            <li class="link" aria-label="food">
                 <a href="food" class="link">
                     <img class="link__image"
                         srcset="images/melanzane-200w.webp, images/melanzane-300w.webp 1.5x, images/melanzane-400w.webp 2x"
@@ -48,7 +48,7 @@
                     <p class="link__text">food</p>
                 </a>
             </li>
-            <li class="link">
+            <li class="link" aria-label="photography">
                 <a href="photography" class="link">
                     <img class="link__image"
                         srcset="images/light-200w.webp, images/light-300w.webp 1.5x, images/light-400w.webp 2x"
@@ -59,7 +59,7 @@
         </ul>
     </main>
 
-    <footer class="socials__container">
+    <footer class="socials__container" aria-label="footer">
         <p class="socials__title">Where to find me?</p>
         <p class="social__content"><a href="https://www.linkedin.com/in/szaa/" target="_blank"
                 class="social__link">linkedin</a>, <a href="https://github.com/SalomonAber" target="_blank"
