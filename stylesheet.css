@@ -1,7 +1,27 @@
+:root {
+  --foreground-color: #000;
+  --background-color: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-color: #fff;
+    --background-color: #202020;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --foreground-color: #000;
+    --background-color: #fff;
+  }
+}
+
 body {
   display: grid;
   min-height: 100vh;
   grid: auto 1fr auto / 100%;
+  background: var(--background-color);
 }
 
 .title {
@@ -10,17 +30,21 @@ body {
 }
 
 .title__title {
+  font-size: 24px;
   font-weight: 800;
+  color: var(--foreground-color);
 }
 
 .title__description {
   margin-top: 10px;
   width: 200px;
+  color: var(--foreground-color);
 }
 
 .title__date {
   margin-top: 10px;
   font-style: italic;
+  color: var(--foreground-color);
 }
 
 .links__container {
@@ -49,7 +73,7 @@ body {
 
 .link__text {
   margin-top: 10px;
-  color: black;
+  color: var(--foreground-color);
 }
 
 .link:hover .link__text {
@@ -62,16 +86,19 @@ body {
 
 .socials__title {
   font-weight: 800;
+  color: var(--foreground-color);
 }
 
 .social__content {
   margin-top: 10px;
+  color: var(--foreground-color);
 }
 
 .social__link {
   color: black;
   text-decoration: none;
   font-style: italic;
+  color: var(--foreground-color);
 }
 
 .social__link:hover {
