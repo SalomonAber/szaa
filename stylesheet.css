@@ -168,7 +168,6 @@ body {
 }
 
 .social__link {
-  color: black;
   text-decoration: underline dotted;
   font-style: italic;
   color: var(--foreground-color);
