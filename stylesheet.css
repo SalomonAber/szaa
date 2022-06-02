@@ -150,6 +150,7 @@ body {
 /* Socials section */
 
 .socials {
+  color: var(--foreground-color);
   grid-column: 2;
   grid-row: 3;
   margin: 0 100px 100px 0;
