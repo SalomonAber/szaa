@@ -1,87 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Salomon Aengenheyster-Aber / Music</title>
-    <!-- meta data -->
-    <meta name="description" content="Personal website of Salomon Aengenheyster-Aber" />
-    <meta name="author" content="Salomon Aengenheyster-Aber" />
-    <meta name="keywords" content="szaa, Salomon, Aengenheyster, Aber, Aengenheyster-Aber" />
-    <!-- style -->
-    <link rel="stylesheet" href="/css/reset.css" type="text/css" />
-    <link rel="stylesheet" href="/css/stylesheet.css" type="text/css" />
-    <!-- apple -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000">
-    <!-- android -->
-    <link rel="manifest" href="/site.webmanifest">
-    <meta name="theme-color" content="#fff" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#202020" media="(prefers-color-scheme: dark)">
-    <!-- microsoft -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="msapplication-TileColor" content="#202020" media="(prefers-color-scheme: light)">
-    <meta name="msapplication-TileColor" content="#202020" media="(prefers-color-scheme: dark)">
-    <!-- opengraph -->
-    <meta property="og:title" content="Salomon Aengenheyster-Aber" />
-    <meta property="og:image" content="https://szaa.info/images/logo-dark-1200w.png" />
-    <meta property="og:image:alt" content="Logo for Salomon Aengenheyster-Aber's personal site" />
-    <meta property="og:description"
-        content="Hi! Welcome to the personal website of Salomon Aengenheyster-Aber. Feel free to browser around." />
-    <meta property="og:url" content="https://szaa.info/" />
-    <meta property="og:site_name" content="Salomon Aengenheyster-Aber">
-    <meta property="og:type" content="website" />
-    <!-- twitter -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:url" content="https://szaa.info/">
-    <meta name="twitter:title" content="Salomon Aengenheyster-Aber">
-    <meta name="twitter:description"
-        content="Hi! Welcome to the personal website of Salomon Aengenheyster-Aber. Feel free to browser around.">
-    <meta name="twitter:image" content="https://szaa.info/images/logo-dark-1200w.png">
-    <meta name="twitter:site" content="@szaa84888753">
-</head>
-
-<body>
-    <header class="title" aria-label="heading">
-        <h1 class="title__title" aria-label="name"><a class="title__link" href="/">Salomon Zelik Aengenheyster-Aber</a>
-            / Music</h1>
-        <p class="title__description" aria-label="salutation">
-            Hi! Welcome to my personal website. Feel free
-            to browse around.
-        </p>
-        <p class="title__date" aria-label="date"><time datetime="2022-05-01" aria-label="date">May 1st, 2022</time></p>
-    </header>
-
-    <div class="playlists" aria-label="playlists">
-        {% for playlist in playlists %}
-        <a href="{{ playlist['href'] }}" target="_blank" class="playlist" aria-label="{{ playlist['name'] }}">
-            <img class="playlist__image" srcset="{{ playlist['srcset'] }}" src="{{ playlist['src'] }}"
-                alt="Playlist thumbnail for {{ playlist['name'] }}" width="200" height="200" />
-            <p class="playlist__text">{{ playlist["name"] }}</p>
-        </a>
-        {% endfor %}
-    </div>
-
-    <div class="logo" aria-hidden="true">
-        <svg class="logo__icon" width="30" height="30" viewBox="0 0 1e3 1e3" xmlns="http://www.w3.org/2000/svg">
-            <rect id="rect" fill="var(--secondary-color)" width="1e3" height="1e3" />
-            <ellipse fill="var(--background-color)" cx="499.98" cy="500" rx="287.69" ry="287.72" />
-            <path id="tilda" fill="var(--foreground-color)"
-                d="m589.79 304.17q36.27 0 61.417 15.728 25.631 15.728 45.458 36.698 19.827 20.446 38.204 36.698 18.377 15.728 40.622 15.728 29.983 0 53.196-25.688 23.696-25.688 42.557-63.434l58.032 32.504q-14.024 29.882-34.335 60.813-20.311 30.407-50.294 51.377-29.499 20.446-72.056 20.446-33.852 0-58.999-15.728-24.663-15.728-44.975-36.173-20.311-20.97-39.655-36.698-19.344-16.252-42.073-16.252-31.434 0-54.163 25.688-22.729 25.164-41.589 62.91l-58.032-30.931q14.508-30.931 34.335-61.862 20.311-30.931 49.811-51.377 29.499-20.446 72.54-20.446z" />
-        </svg>
-    </div>
-
-
-    <footer class="socials" aria-label="footer">
-        <p class="socials__title" aria-label="footer title">Where to find me?</p>
-        <p class="social" aria-label="footer content"><a href="https://www.linkedin.com/in/szaa/" target="_blank"
-                class="social__link">linkedin</a>, <a href="https://github.com/SalomonAber" target="_blank"
-                class="social__link">github</a> or <a href="https://open.spotify.com/user/saladman2002" target="_blank"
-                class="social__link">spotify</a>.</p>
-    </footer>
-</body>
-
-</html>
+{% extends "base.html" %}
+{% block title %} / Music{% endblock %}
+{% block content %}
+<div class="playlists" aria-label="playlists">
+    {% for playlist in playlists %}
+    <a href="{{ playlist['href'] }}" target="_blank" class="playlist" aria-label="{{ playlist['name'] }}">
+        <img class="playlist__image" srcset="{{ playlist['srcset'] }}" src="{{ playlist['src'] }}"
+            alt="Playlist thumbnail for {{ playlist['name'] }}" width="200" height="200" />
+        <p class="playlist__text">{{ playlist["name"] }}</p>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}
