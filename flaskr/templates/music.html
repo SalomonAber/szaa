@@ -1,13 +1,61 @@
 {% extends "base.html" %}
 {% block title %} / Music{% endblock %}
 {% block content %}
-<div class="playlists" aria-label="playlists">
-    {% for playlist in playlists %}
-    <a href="{{ playlist['href'] }}" target="_blank" class="playlist" aria-label="{{ playlist['name'] }}">
-        <img class="playlist__image" srcset="{{ playlist['srcset'] }}" src="{{ playlist['src'] }}"
-            alt="Playlist thumbnail for {{ playlist['name'] }}" width="200" height="200" />
-        <p class="playlist__text">{{ playlist["name"] }}</p>
-    </a>
-    {% endfor %}
-</div>
+<section class="section section--tracks">
+    <h2 class="section__title">My music</h2>
+    <p class="section__description">In my early years, my family and I often travelled between Gernsbach Germany and
+        London Great Britain. The piano however stayed in Germany. To get to Germany we used to set off in the dark
+        shadow of the 3 a.m. sky. We would watch the sun climb as we navigated the corroded English country lanes,
+        frequently tolled French motorways and never-ending German Autobahns. When, at 10 in the morning, we finally
+        arrived we would stumble into our home in a sleepy haze. Whilst my parents choatically unpacked the car I would
+        make a beeline for the piano.</p>
+    <div class="section__grid">
+        {% for track in tracks %}
+        <div class="item" aria-label="{{ track['name'] }}">
+            <iframe class="item__embed" width="200" height="200" scrolling="no" frameborder="no" allow="autoplay"
+                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/{{ track['id'] }}&color=%23202020&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>
+            <a class="item__link" target="_blank" href="{{ track['href'] }}">{{ track["name"] }}</a>
+        </div>
+        {% endfor %}
+    </div>
+    <a class="section__more" href="https://soundcloud.com/{{ config['SOUNDCLOUD_USERNAME'] }}" target="_blank">Show
+        all</a>
+</section>
+
+<section class="section section--playlists">
+    <h2 class="section__title">My Playlists</h2>
+
+    <div class="section__grid">
+        {% for playlist in playlists %}
+        <a class="item" href="{{ playlist['href'] }}" target="_blank" aria-label="{{ playlist['name'] }}">
+            <img class="item__image" srcset="{{ playlist['srcset'] }}" src="{{ playlist['src'] }}"
+                alt="Playlist thumbnail for {{ playlist['name'] }}" width="200" height="200" />
+            <p class="item__text">{{ playlist["name"] }}</p>
+        </a>
+        {% endfor %}
+    </div>
+    <a class="section__more" href="https://open.spotify.com/user/{{ config['SPOTIFY_USER_ID'] }}/playlists"
+        target="_blank">Show all</a>
+</section>
+
+<section class="section section--ntdbs">
+    <h2 class="section__title">NPR Tiny Desk Best</h2>
+    <p class="section__description">In an office as crowded as a beehive, a couple of carefully placed mics record bona
+        fide performances from both distinguished and emerging artists. The limited room behind Bob Hope's desks allows
+        the focus to be placed on musical expression. Despite the tight squeeze, Josh Rogosin manages to paint NPR's
+        signature bright and crisp sound in what has to be the best recorded series of live concerts to date! Here are
+        my favourite NPR Tiny Desk Concerts:</p>
+    <div class="section__grid">
+        {% for ntdb in ntdbs %}
+        <a class="item" href="{{ ntdb['href'] }}" target="_blank" aria-label="{{ ntdb['name'] }}">
+            <img class="item__image" srcset="{{ ntdb['srcset'] }}" src="{{ ntdb['src'] }}"
+                alt="Playlist thumbnail for {{ ntdb['name'] }}" width="200" height="200" />
+            <p class="item__text">{{ ntdb["name"] }}</p>
+        </a>
+        {% endfor %}
+    </div>
+    <a class="section__more" href="https://www.youtube.com/playlist?list={{ config['NPR_TINY_DESK_BEST_ID'] }}"
+        target="_blank">Show
+        all</a>
+</section>
 {% endblock %}

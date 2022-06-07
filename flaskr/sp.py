@@ -13,7 +13,3 @@ def get_sp():
         )
 
     return g.sp
-
-
-def init_sp():
-    sp = get_sp()
