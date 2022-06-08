@@ -84,7 +84,7 @@
 
 .logo {
   display: inline-flex;
-  margin: 100px 100px 0 0;
+  margin: 0 0 100px 100px;
   justify-content: flex-end;
   align-content: flex-start;
   width: 50;
@@ -173,7 +173,12 @@
 
 /* Socials section */
 
+.body--grid .socials {
+  float: left;
+}
+
 .socials {
+  float: right;
   color: var(--foreground-color);
   grid-column: 2;
   grid-row: 3;
@@ -240,9 +245,16 @@
 }
 
 .item__image {
+  display: block;
+  width: 200px;
   height: 200px;
   aspect-ratio: 1/1;
   object-fit: cover;
+  background: #333;
+  /* Style alt text */
+  color: #fff;
+  text-align: center;
+  line-height: 200px;
 }
 
 .item__text {
@@ -260,6 +272,7 @@
 .item__embed {
   height: 200px;
   width: 200px;
+  background: #333;
 }
 
 .item__link {
@@ -278,11 +291,6 @@
 
 .section__more {
   color: var(--foreground-color);
-  text-decoration: none;
-}
-
-.section__more:hover {
-  text-decoration: underline;
 }
 
 @media (min-width: 600px) and (max-width: 950px) {

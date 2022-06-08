@@ -160,4 +160,14 @@ def create_app(test_config=None):
                 "music.html", tracks=tracks, playlists=playlists, ntdbs=ntdbs
             )
 
+    @app.route("/food")
+    # @cache.cached()
+    def food():
+        return render_template("food.html")
+
+    @app.route("/photography")
+    # @cache.cached()
+    def photography():
+        return render_template("photography.html")
+
     return app
