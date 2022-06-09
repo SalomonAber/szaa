@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% block title %} / Music{% endblock %}
 {% block content %}
-<section class="section section--tracks">
-    <h2 class="section__title">My music</h2>
-    <p class="section__description">In my early years, my family and I often travelled between Gernsbach Germany and
+<section class="music music--tracks">
+    <h2 class="music__title">My music</h2>
+    <p class="music__description">In my early years, my family and I often travelled between Gernsbach Germany and
         London Great Britain. The piano however stayed in Germany. To get to Germany we used to set off in the dark
         shadow of the 3 a.m. sky. We would watch the sun climb as we navigated the corroded English country lanes,
         frequently tolled French motorways and never-ending German Autobahns. When, at 10 in the morning, we finally
         arrived we would stumble into our home in a sleepy haze. Whilst my parents choatically unpacked the car I would
         make a beeline for the piano.</p>
-    <div class="section__grid">
+    <div class="music__grid">
         {% for track in tracks %}
         <div class="item" aria-label="{{ track['name'] }}">
             <iframe class="item__embed" width="200" height="200" scrolling="no" frameborder="no" allow="autoplay"
@@ -18,14 +18,14 @@
         </div>
         {% endfor %}
     </div>
-    <a class="section__more" href="https://soundcloud.com/{{ config['SOUNDCLOUD_USERNAME'] }}" target="_blank">Show
+    <a class="music__more" href="https://soundcloud.com/{{ config['SOUNDCLOUD_USERNAME'] }}" target="_blank">Show
         all</a>
 </section>
 
-<section class="section section--playlists">
-    <h2 class="section__title">My Playlists</h2>
+<section class="music music--playlists">
+    <h2 class="music__title">My Playlists</h2>
 
-    <div class="section__grid">
+    <div class="music__grid">
         {% for playlist in playlists %}
         <a class="item" href="{{ playlist['href'] }}" target="_blank" aria-label="{{ playlist['name'] }}">
             <img class="item__image" srcset="{{ playlist['srcset'] }}" src="{{ playlist['src'] }}"
@@ -34,27 +34,27 @@
         </a>
         {% endfor %}
     </div>
-    <a class="section__more" href="https://open.spotify.com/user/{{ config['SPOTIFY_USER_ID'] }}/playlists"
+    <a class="music__more" href="https://open.spotify.com/user/{{ config['SPOTIFY_USER_ID'] }}/playlists"
         target="_blank">Show all</a>
 </section>
 
-<section class="section section--ntdbs">
-    <h2 class="section__title">NPR Tiny Desk Best</h2>
-    <p class="section__description">In an office as crowded as a beehive, a couple of carefully placed mics record bona
+<section class="music music--ntdbs">
+    <h2 class="music__title">NPR Tiny Desk Best</h2>
+    <p class="music__description">In an office as crowded as a beehive, a couple of carefully placed mics record bona
         fide performances from both distinguished and emerging artists. The limited room behind Bob Hope's desks allows
         the focus to be placed on musical expression. Despite the tight squeeze, Josh Rogosin manages to paint NPR's
         signature bright and crisp sound in what has to be the best recorded series of live concerts to date! Here are
         my favourite NPR Tiny Desk Concerts:</p>
-    <div class="section__grid">
-        {% for ntdb in ntdbs %}
-        <a class="item" href="{{ ntdb['href'] }}" target="_blank" aria-label="{{ ntdb['name'] }}">
-            <img class="item__image" srcset="{{ ntdb['srcset'] }}" src="{{ ntdb['src'] }}"
-                alt="Playlist thumbnail for {{ ntdb['name'] }}" width="200" height="200" />
-            <p class="item__text">{{ ntdb["name"] }}</p>
+    <div class="music__grid">
+        {% for video in videos %}
+        <a class="item" href="{{ video['href'] }}" target="_blank" aria-label="{{ video['name'] }}">
+            <img class="item__image" srcset="{{ video['srcset'] }}" src="{{ video['src'] }}"
+                alt="Playlist thumbnail for {{ video['name'] }}" width="200" height="200" />
+            <p class="item__text">{{ video["name"] }}</p>
         </a>
         {% endfor %}
     </div>
-    <a class="section__more" href="https://www.youtube.com/playlist?list={{ config['NPR_TINY_DESK_BEST_ID'] }}"
+    <a class="music__more" href="https://www.youtube.com/playlist?list={{ config['NPR_TINY_DESK_BEST_ID'] }}"
         target="_blank">Show
         all</a>
 </section>

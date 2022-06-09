@@ -1,11 +1,10 @@
-import os
-from turtle import width
-from flaskr.sp import get_sp
-from flaskr.sc import get_sc
-from flaskr.yt import get_yt
-from flask import Flask, render_template
+from flaskr.sp import get_playlists
+from flaskr.sc import get_tracks
+from flaskr.yt import get_videos
+from flaskr.r import get_r
+from flask import Flask, render_template, jsonify
 from flask_caching import Cache
-import math
+import json
 
 
 def create_app(test_config=None):
@@ -22,12 +21,28 @@ def create_app(test_config=None):
     else:
         app.config.from_mapping(test_config)
 
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
-
     cache = Cache(app)
+
+    @app.route("/trigger")
+    def trigger():
+        """
+        Load API data into Reddis
+        """
+        with app.app_context():
+            r = get_r()
+            # Soundcloud
+            tracks = get_tracks()
+            json_sc = json.dumps(tracks)
+            r.set("sc", json_sc)
+            # Spotify
+            playlists = get_playlists()
+            json_sp = json.dumps(playlists)
+            r.set("sp", json_sp)
+            # Youtube
+            videos = get_videos()
+            json_yt = json.dumps(videos)
+            r.set("yt", json_yt)
+            return jsonify(success=True)
 
     @app.route("/")
     @cache.cached()
@@ -35,129 +50,24 @@ def create_app(test_config=None):
         return render_template("index.html")
 
     @app.route("/music")
-    # @cache.cached()
+    @cache.cached()
     def music():
         with app.app_context():
-            # Soundcloud
+            r = get_r()
             tracks = []
-            try:
-                sc = get_sc()
-                data = sc.get_tracks(app.config["SOUNDCLOUD_USER_ID"])
-                if "collection" not in data:
-                    raise Exception("JSON response invalid")
-                sc_tracks = data["collection"]
-                for sc_track in sc_tracks:
-                    track = {}
-                    try:
-                        track["id"] = sc_track["id"]
-                        track["name"] = sc_track["title"]
-                        track["href"] = sc_track["permalink_url"]
-                        track["src"] = sc_track["artwork_url"]
-                        tracks += [track]
-                    except Exception as err:
-                        app.logger.error("Error loading track '%s': %s", sc_track, err)
-            except Exception as err:
-                app.logger.error("Error loading tracks: %s", err)
-            # Spotify
+            json_sc = r.get("sc")
+            if json_sc is not None:
+                tracks = json.loads(json_sc.decode("utf-8"))
             playlists = []
-            try:
-                sp = get_sp()
-                data = sp.user_playlists(app.config["SPOTIFY_USER_ID"], limit=20)
-                if "items" not in data:
-                    raise Exception("JSON response invalid")
-                sp_playlists = data["items"]
-                for sp_playlist in sp_playlists:
-                    playlist = {}
-                    try:
-                        playlist["name"] = sp_playlist["name"]
-                        playlist["href"] = sp_playlist["external_urls"]["spotify"]
-                        srcset = []
-                        distance = math.inf
-                        closest = None
-                        for image in sp_playlist["images"]:
-                            # Custom images do not have width property
-                            # If closest is None accept custom image
-                            if image["height"] is None and closest is None:
-                                closest = image
-                                continue
-                            if abs(image["height"] - 300) < distance:
-                                distance = abs(image["height"] - 300)
-                                closest = image
-                        if closest is None:
-                            raise Exception("No suitable thumbnail exists")
-                        playlist["src"] = closest["url"]
-                        for image in sp_playlist["images"]:
-                            if image["height"] is None:
-                                continue
-                            srcset += [
-                                "{} {}x".format(
-                                    image["url"], image["height"] / closest["height"]
-                                )
-                            ]
-                        playlist["srcset"] = ", ".join(srcset)
-                        playlists += [playlist]
-                    except Exception as err:
-                        app.logger.error(
-                            "Error loading playlist '%s': %s", sp_playlist["name"], err
-                        )
-            except Exception as err:
-                app.logger.error("Error loading playlists: %s", err)
-            # Youtube
-            ntdbs = []
-            try:
-                yt = get_yt()
-                request = yt.playlistItems().list(
-                    part="snippet",
-                    playlistId=app.config["NPR_TINY_DESK_BEST_ID"],
-                    maxResults=20,
-                )
-                response = request.execute()
-                yt_items = response["items"]
-                for yt_item in yt_items:
-                    ntdb = {}
-                    try:
-                        ntdb["name"] = yt_item["snippet"]["title"]
-                        ntdb[
-                            "href"
-                        ] = "https://www.youtube.com/watch?v={}&list={}".format(
-                            yt_item["snippet"]["resourceId"]["videoId"],
-                            yt_item["snippet"]["playlistId"],
-                        )
-                        srcset = []
-                        distance = math.inf
-                        closest = None
-                        for image in yt_item["snippet"]["thumbnails"].values():
-                            # Custom images do not have width property
-                            # If closest is None accept custom image
-                            if image["height"] is None and closest is None:
-                                closest = image
-                                continue
-                            if abs(image["height"] - 300) < distance:
-                                distance = abs(image["height"] - 300)
-                                closest = image
-                        if closest is None:
-                            raise Exception("No suitable thumbnail exists")
-                        ntdb["src"] = closest["url"]
-                        for image in yt_item["snippet"]["thumbnails"].values():
-                            if image["height"] is None:
-                                continue
-                            srcset += [
-                                "{} {}x".format(
-                                    image["url"], image["height"] / closest["height"]
-                                )
-                            ]
-                        ntdb["srcset"] = ", ".join(srcset)
-                        ntdbs += [ntdb]
-                    except Exception as err:
-                        app.logger.error(
-                            "Error loading ntdb '%s': %s",
-                            yt_item["snippet"]["title"],
-                            err,
-                        )
-            except Exception as err:
-                app.logger.error("Error loading ntdbs: %s", err)
+            json_sp = r.get("sp")
+            if json_sp is not None:
+                playlists = json.loads(json_sp.decode("utf-8"))
+            videos = []
+            json_yt = r.get("yt")
+            if json_yt is not None:
+                videos = json.loads(json_yt.decode("utf-8"))
             return render_template(
-                "music.html", tracks=tracks, playlists=playlists, ntdbs=ntdbs
+                "music.html", tracks=tracks, playlists=playlists, videos=videos
             )
 
     @app.route("/food")

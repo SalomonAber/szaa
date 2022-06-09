@@ -213,23 +213,23 @@
 
 /* Music sections */
 
-.section {
+.music {
   margin: 50px 100px;
 }
 
-.section__title {
+.music__title {
   color: var(--foreground-color);
   font-size: 20px;
   font-weight: 800;
   margin-bottom: 20px;
 }
 
-.section__description {
+.music__description {
   color: var(--foreground-color);
   margin-bottom: 20px;
 }
 
-.section__grid {
+.music__grid {
   display: flex;
   flex-wrap: wrap;
   row-gap: 20px;
@@ -289,7 +289,7 @@
   text-decoration: underline;
 }
 
-.section__more {
+.music__more {
   color: var(--foreground-color);
 }
 

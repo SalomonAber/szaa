@@ -49,3 +49,26 @@ def get_sc():
         )
 
     return g.sc
+
+
+def get_tracks():
+    tracks = []
+    try:
+        sc = get_sc()
+        data = sc.get_tracks(current_app.config["SOUNDCLOUD_USER_ID"])
+        if "collection" not in data:
+            raise Exception("JSON response invalid")
+        sc_tracks = data["collection"]
+        for sc_track in sc_tracks:
+            track = {}
+            try:
+                track["id"] = sc_track["id"]
+                track["name"] = sc_track["title"]
+                track["href"] = sc_track["permalink_url"]
+                track["src"] = sc_track["artwork_url"]
+                tracks += [track]
+            except Exception as err:
+                current_app.logger.error("Error loading track '%s': %s", sc_track, err)
+    except Exception as err:
+        current_app.logger.error("Error loading sc: %s", err)
+    return tracks
